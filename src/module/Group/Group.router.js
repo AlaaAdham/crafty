@@ -1,0 +1,16 @@
+import { Router } from "express";
+import auth, { roles } from "../../MiddleWare/auth.middleware.js";
+import { endPointproject } from './end.js';
+import *as creategroup from "./creategroup.js";
+import { validation } from "../../MiddleWare/validation.js";
+import * as validators from '../Group/Group.validayion.js';
+const Grouprouter = Router();
+Grouprouter.post('/Group',auth(endPointproject.create),validation(validators.createGroup),creategroup.createGroupProject);
+Grouprouter.get('/confirmEmail/:token',validation(validators.token),creategroup.confirmEmail);
+Grouprouter.patch('/taskstatus/:id',auth(endPointproject.update),validation(validators.taskStatus),creategroup.updatestatus);
+Grouprouter.get('/Groupinfo/:id',auth(endPointproject.get),creategroup.getinformation);
+Grouprouter.delete('/deletegroup/:id',auth(endPointproject.delete),validation(validators.deleteGroup),creategroup.deletegroup);
+Grouprouter.patch('/updateinfo/:id',auth(endPointproject.update),validation(validators.updateGroup),creategroup.updateinfo);
+Grouprouter.delete('/deleteusergroup/:id',auth(endPointproject.deleteuser),validation(validators.deleteFromGroup),creategroup.deleteuserfromgroup);
+Grouprouter.post('/adduser/:id',auth(endPointproject.add),validation(validators.addToGroup),creategroup.adduseringroup);
+export default Grouprouter;
